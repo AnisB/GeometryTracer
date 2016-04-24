@@ -27,10 +27,10 @@ namespace Tracer
 {
 	// Init Functions
 	void matrix4(Matrix4& _mat, MatrixInit::Type _init = MatrixInit::Zero);
-	void matrix4(Matrix4& _mat, double* _values);
+	void matrix4(Matrix4& _mat, float* _values);
 	void SetIdentity(Matrix4& _matrix);
 	void ResetToZero(Matrix4& _matrix);
-	void AsPerspective(Matrix4& _mat, double parFovy, double parAspect, double parNear, double parFar);
+	void AsPerspective(Matrix4& _mat, float parFovy, float parAspect, float parNear, float parFar);
 
 	// Access functions
 	Vector3 GetTranslate(const Matrix4& _matrix);
@@ -39,17 +39,17 @@ namespace Tracer
 	Vector3 ZAxis(const Matrix4& _matrix);
 	
 	// Computing functions
-	double Det(const Matrix4& _matrix);
+	float Det(const Matrix4& _matrix);
 	Matrix3 Inverse3x3(const Matrix4& _mat);
 	Matrix4 Translate_M4(const Vector4& parVector);
 	Matrix4 Translate_M4(const Vector3& parVector);
 
-	Matrix4 Rotate(double parAngle, const Vector3& parAxis);
+	Matrix4 Rotate(float parAngle, const Vector3& parAxis);
 	void ToTable(const Matrix4& _matrix, float* content);
 
-	Matrix4 RotateXAxis(double parAngle);
-	Matrix4 RotateYAxis(double parAngle);
-	Matrix4 RotateZAxis(double parAngle);
+	Matrix4 RotateXAxis(float parAngle);
+	Matrix4 RotateYAxis(float parAngle);
+	Matrix4 RotateZAxis(float parAngle);
 
 	Vector4 operator*(const Matrix4& _mat, const Vector4& _fac);
 	Matrix4 operator*(const Matrix4& _mat1, const Matrix4& _mat2);

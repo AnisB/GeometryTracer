@@ -6,28 +6,6 @@ using namespace Tracer;
 int main()
 {
 	TProducer manager(".", "sceneA");
-	manager.PushTriangle(vector3(0.0, 1.0, 0.0), vector3(1.0, 1.0, 0.0), vector3(0.0, 1.0, 1.0));
-	manager.PushTriangle(vector3(0.0, 1.0, 0.0), vector3(1.0, 1.0, 0.0), vector3(0.0, 1.0, 1.0));
-	manager.PushTriangle(vector3(0.0, 1.0, 0.0), vector3(1.0, 1.0, 0.0), vector3(0.0, 1.0, 1.0));
-	manager.PushTriangle(vector3(0.0, 1.0, 0.0), vector3(1.0, 1.0, 0.0), vector3(0.0, 1.0, 1.0));
-	manager.PushTriangle(vector3(0.0, 1.0, 0.0), vector3(1.0, 1.0, 0.0), vector3(0.0, 1.0, 1.0));
-	manager.PushTriangle(vector3(0.0, 1.0, 0.0), vector3(1.0, 1.0, 0.0), vector3(0.0, 1.0, 1.0));
-
-
-	manager.PushLine(vector3(0.0, 1.0, 0.0), vector3(1.0, 1.0, 0.0));
-	manager.PushLine(vector3(0.0, 1.0, 0.0), vector3(1.0, 1.0, 0.0));
-	manager.PushLine(vector3(0.0, 1.0, 0.0), vector3(1.0, 1.0, 0.0));
-	manager.PushLine(vector3(0.0, 1.0, 0.0), vector3(1.0, 1.0, 0.0));
-	manager.PushLine(vector3(0.0, 1.0, 0.0), vector3(1.0, 1.0, 0.0));
-	manager.PushLine(vector3(0.0, 1.0, 0.0), vector3(1.0, 1.0, 0.0));
-
-
-	manager.PushPoint(vector3(0.0, 1.0, 0.0));
-	manager.PushPoint(vector3(0.0, 1.0, 0.0));
-	manager.PushPoint(vector3(0.0, 1.0, 0.0));
-	manager.PushPoint(vector3(0.0, 1.0, 0.0));
-	manager.PushPoint(vector3(0.0, 1.0, 0.0));
-	manager.PushPoint(vector3(0.0, 1.0, 0.0));
-
+	manager.PushTriangle(vector3(20, -20, -150), vector3(20, 20, -150), vector3(-20, -20, -150));
 	return 0;
 }

@@ -20,7 +20,7 @@ namespace Tracer
 {
 
 	// Constructors;
-	Vector3 vector3(const double _x, const double _y, const double _z)
+	Vector3 vector3(const float _x, const float _y, const float _z)
 	{
 		Vector3 out;
 		out.x = _x;
@@ -28,7 +28,7 @@ namespace Tracer
 		out.z = _z;
 		return out;
 	}
-	Vector3 vector3(const double _v)
+	Vector3 vector3(const float _v)
 	{
 		Vector3 out;
 		out.x = _v;
@@ -38,7 +38,7 @@ namespace Tracer
 	}
 
 	// Operators
-	Vector3 operator*(const Vector3& _v1, double _factor)
+	Vector3 operator*(const Vector3& _v1, float _factor)
 	{
 		return vector3(_v1.x*_factor,  _v1.y*_factor, _v1.z*_factor);
 	}
@@ -47,7 +47,7 @@ namespace Tracer
 		return vector3(_v1.x*_v2.x,  _v1.y*_v2.y, _v1.z*_v2.z);
 	}
 
-	Vector3 operator/(const Vector3& _v1, double _factor)
+	Vector3 operator/(const Vector3& _v1, float _factor)
 	{
 		return vector3(_v1.x/_factor,  _v1.y/_factor, _v1.z/_factor);
 	}
@@ -67,7 +67,7 @@ namespace Tracer
 	}
 	
 	// Cannonic operations
-	double dotProd(const Vector3& _v1, const Vector3& _v2)
+	float dotProd(const Vector3& _v1, const Vector3& _v2)
 	{
 		return _v1.x * _v2.x + _v1.y * _v2.y + _v1.z * _v2.z;
 	}
@@ -77,12 +77,12 @@ namespace Tracer
 		return vector3(_v1.y*_v2.z - _v1.z * _v2.y, _v1.z*_v2.x - _v1.x * _v2.z, _v1.x*_v2.y - _v1.y * _v2.x);
 	}
 
-	double length(const Vector3& _v1)
+	float length(const Vector3& _v1)
 	{
 		return sqrt(_v1.x * _v1.x + _v1.y * _v1.y + _v1.z * _v1.z);
 	}
 
-	double length2(const Vector3& _v1)
+	float length2(const Vector3& _v1)
 	{
 		return (_v1.x * _v1.x + _v1.y * _v1.y + _v1.z * _v1.z);
 	}

@@ -32,12 +32,12 @@ namespace Tracer
 
 	Matrix3::Matrix3(const Matrix3& _mat)
 	{
-		memcpy(m, _mat.m, 9*sizeof(double));
+		memcpy(m, _mat.m, 9*sizeof(float));
 	}
 
 	Matrix3& Matrix3::operator=(const Matrix3 _mat)
 	{
-		memcpy(m, _mat.m, 9*sizeof(double));
+		memcpy(m, _mat.m, 9*sizeof(float));
 		return *this;
 	}
 	void SetIdentity(Matrix3& _mat)
@@ -55,7 +55,7 @@ namespace Tracer
 		_mat.m[8] = 1.0;
 	}
 
-	double Det(const Matrix3& _mat)
+	float Det(const Matrix3& _mat)
 	{
 		return (_mat.m[0]*_mat.m[4]*_mat.m[8]-_mat.m[7]*_mat.m[5])
 	           -_mat.m[1]*(_mat.m[3]*_mat.m[8]-_mat.m[5]*_mat.m[6])
@@ -74,7 +74,7 @@ namespace Tracer
 	Matrix3 Inverse(const Matrix3& _mat)
 	{
 		Matrix3 inverseMatrix;
-		double invdet = 1.0/Det(_mat);
+		float invdet = 1.0/Det(_mat);
 		inverseMatrix.m[0] =  (_mat.m[4]*_mat.m[8]-_mat.m[7]*_mat.m[5])*invdet;
 		inverseMatrix.m[3] = -(_mat.m[1]*_mat.m[8]-_mat.m[2]*_mat.m[7])*invdet;
 		inverseMatrix.m[6] =  (_mat.m[1]*_mat.m[5]-_mat.m[2]*_mat.m[4])*invdet;

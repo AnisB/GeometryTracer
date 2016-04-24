@@ -25,6 +25,10 @@ namespace Tracer
 		// File tag
 		STRING_TYPE m_outputLocation;
 		STRING_TYPE m_tag;
+
+		// Nb 32 bit values counter
+		size_t m_counter;
+		
 		// The output binary file writer
 		std::fstream m_fileStream;
 

@@ -1,11 +1,14 @@
 #ifndef TRACER_TYPES_H
 #define TRACER_TYPES_H
 
+// External includes
+#include <stdint.h>
+
 namespace Tracer
 {
 	namespace TPrimitives
 	{
-		enum Type : int
+		enum Type : int32_t
 		{
 			UNKNOWN = 0,
 			TRIANGLE = 1,

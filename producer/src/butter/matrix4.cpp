@@ -15,26 +15,26 @@ namespace Tracer
 			SetIdentity(_mat);
 	}
 
-	void matrix4(Matrix4& _mat, double* _values)
+	void matrix4(Matrix4& _mat, float* _values)
 	{
-		memcpy(_mat.m, _values,16*sizeof(double));
+		memcpy(_mat.m, _values,16*sizeof(float));
 	}
 
 	Matrix4& Matrix4::operator=(const Matrix4 _mat)
 	{
-		memcpy(m, _mat.m, 16*sizeof(double));
+		memcpy(m, _mat.m, 16*sizeof(float));
 		return *this;
 	}
 
 	Matrix4::Matrix4(const Matrix4& _mat)
 	{
-		memcpy(m, _mat.m,16*sizeof(double));
+		memcpy(m, _mat.m,16*sizeof(float));
 	}
 
-	void AsPerspective(Matrix4& _mat, double parFovy, double parAspect, double parNear, double parFar)
+	void AsPerspective(Matrix4& _mat, float parFovy, float parAspect, float parNear, float parFar)
 	{
 		std::fill_n(_mat.m, 16, 0);
-		double f = 1/tan(parFovy*3.14/360.0);
+		float f = 1/tan(parFovy*3.14/360.0);
 		_mat.m[0] = f/parAspect;
 		_mat.m[5] = f;
 		_mat.m[10] = (parFar+parNear)/(parNear-parFar);
@@ -51,7 +51,7 @@ namespace Tracer
 		_mat.m[15] = 1.0;
 	}
 
-	double Det(const Matrix4& _mat)
+	float Det(const Matrix4& _mat)
 	{
 		//TODO
 		ASSERT_NOT_IMPLEMENTED();
@@ -145,10 +145,10 @@ namespace Tracer
 		return result;
 	}
 
-	Matrix4 RotateXAxis(double parAngle)
+	Matrix4 RotateXAxis(float parAngle)
 	{
-		double cosVal = cos(parAngle);
-		double sinVal = sin(parAngle);
+		float cosVal = cos(parAngle);
+		float sinVal = sin(parAngle);
 		Matrix4 result;
 		result.m[0] = 1.0;
 		result.m[1] = 0.0;
@@ -172,10 +172,10 @@ namespace Tracer
 		return result;
 	}
 
-	Matrix4 RotateYAxis(double parAngle)
+	Matrix4 RotateYAxis(float parAngle)
 	{
-		double cosVal = cos(parAngle);
-		double sinVal = sin(parAngle);
+		float cosVal = cos(parAngle);
+		float sinVal = sin(parAngle);
 		Matrix4 result;
 		result.m[0] = cosVal;
 		result.m[1] = 0.0;
@@ -199,10 +199,10 @@ namespace Tracer
 		return result;
 	}
 
-	Matrix4 RotateZAxis(double parAngle)
+	Matrix4 RotateZAxis(float parAngle)
 	{
-		double cosVal = cos(parAngle);
-		double sinVal = sin(parAngle);
+		float cosVal = cos(parAngle);
+		float sinVal = sin(parAngle);
 		Matrix4 result;
 		result.m[0] = cosVal;
 		result.m[1] = -sinVal;
@@ -275,7 +275,7 @@ namespace Tracer
 	Matrix3 Inverse3x3(const Matrix4& _mat)
 	{
 		Matrix3 inverseMatrix;
-		double invdet = 1.0/(_mat.m[0]*(_mat.m[5]*_mat.m[10]-_mat.m[9]*_mat.m[6])
+		float invdet = 1.0/(_mat.m[0]*(_mat.m[5]*_mat.m[10]-_mat.m[9]*_mat.m[6])
 	           -_mat.m[1]*(_mat.m[4]*_mat.m[10]-_mat.m[6]*_mat.m[8])
 	           +_mat.m[2]*(_mat.m[4]*_mat.m[9]-_mat.m[5]*_mat.m[8]));
 		inverseMatrix.m[0] =  (_mat.m[5]*_mat.m[10]-_mat.m[9]*_mat.m[6])*invdet;
@@ -290,15 +290,15 @@ namespace Tracer
 		return inverseMatrix;
 	}
 
-	Matrix4 Rotate(double _angle, const Vector3& _axis)
+	Matrix4 Rotate(float _angle, const Vector3& _axis)
 	{
-		double u = _axis.x;
-		double v = _axis.y;
-		double w = _axis.z;
-	    double L = (u*u + v * v + w * w);
-	    double u2 = u * u;
-	    double v2 = v * v;
-	    double w2 = w * w; 
+		float u = _axis.x;
+		float v = _axis.y;
+		float w = _axis.z;
+	    float L = (u*u + v * v + w * w);
+	    float u2 = u * u;
+	    float v2 = v * v;
+	    float w2 = w * w; 
 	 
 	 	Matrix4 rotationMatrix;
 	    rotationMatrix.m[0] = (u2 + (v2 + w2) * cos(_angle)) / L;

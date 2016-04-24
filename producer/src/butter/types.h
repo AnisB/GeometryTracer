@@ -19,18 +19,18 @@
 namespace Tracer
 {
 	// Vector types
-	// doubles
+	// floats
 	struct Vector2
 	{
-		double x,y;
+		float x,y;
 	};
 	struct Vector3
 	{
-		double x,y,z;
+		float x,y,z;
 	};
 	struct Vector4
 	{
-		double x,y,z,w;
+		float x,y,z,w;
 	};
 
 	// Int
@@ -62,14 +62,14 @@ namespace Tracer
 		inline Matrix3(){}
 		Matrix3(const Matrix3& _mat);
 		Matrix3& operator=(const Matrix3 _mat);
-		double m[9];
+		float m[9];
 	};
 	struct Matrix4
 	{
 		inline Matrix4(){}
 		Matrix4(const Matrix4& _mat);
 		Matrix4& operator=(const Matrix4 _mat);
-		double m[16];
+		float m[16];
 	};
 }
 

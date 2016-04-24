@@ -31,7 +31,7 @@ namespace Tracer
 	void ResetToZero(Matrix3& _mat);
 
 	// Usual functions		
-	double Det(Matrix3& _mat);
+	float Det(Matrix3& _mat);
 	void ToTable(const Matrix3& _matrix, float* content);
 	Matrix3 Inverse(const Matrix3& parMatrix);
 

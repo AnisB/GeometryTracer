@@ -22,22 +22,22 @@ namespace Tracer
 {
 	// inline methods
 		// Constructors
-	inline Vector3 vector3(const double _x,const double _y, const double _z);
-	inline Vector3 vector3(const double _v);
+	inline Vector3 vector3(const float _x,const float _y, const float _z);
+	inline Vector3 vector3(const float _v);
 
 		// Operators
-	inline Vector3 operator*(const Vector3& _v1, double parFactor);
+	inline Vector3 operator*(const Vector3& _v1, float parFactor);
 	inline Vector3 operator*(const Vector3& _v1, const Vector3& _v2);
-	inline Vector3 operator/(const Vector3& _v1, double parFactor);
+	inline Vector3 operator/(const Vector3& _v1, float parFactor);
 	inline Vector3 operator+(const Vector3& _v1, const Vector3& _v2);
 	inline Vector3 operator-(const Vector3& _v1, const Vector3& _v2);
 	inline Vector3 operator-(const Vector3& _v1);
 
 		// Cannonic operations
-	inline double dotProd(const Vector3& _v1, const Vector3& _v2);
+	inline float dotProd(const Vector3& _v1, const Vector3& _v2);
 	inline Vector3 crossProd(const Vector3& _v1, const Vector3& _v2);
-	inline double length(const Vector3& _v1);
-	inline double length2(const Vector3& _v1);
+	inline float length(const Vector3& _v1);
+	inline float length2(const Vector3& _v1);
 	inline Vector3 normalize(const Vector3& _v1);
 
 	// Default values;

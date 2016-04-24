@@ -20,14 +20,14 @@ namespace Tracer
 {
 
 	// Constructors;
-	Vector2 vector2(const double _x, const double _y)
+	Vector2 vector2(const float _x, const float _y)
 	{
 		Vector2 out;
 		out.x = _x;
 		out.y = _y;
 		return out;
 	}
-	Vector2 vector2(const double _v)
+	Vector2 vector2(const float _v)
 	{
 		Vector2 out;
 		out.x = _v;
@@ -36,14 +36,14 @@ namespace Tracer
 	}
 
 	// Operators
-	Vector2 operator*(const Vector2& _v1, double _factor)
+	Vector2 operator*(const Vector2& _v1, float _factor)
 	{
 		Vector2 out(_v1);
 		out.x *= _factor;
 		out.y *= _factor;
 		return out;
 	}
-	Vector2 operator/(const Vector2& _v1, double _factor)
+	Vector2 operator/(const Vector2& _v1, float _factor)
 	{
 		Vector2 out(_v1);
 		out.x /= _factor;
@@ -62,17 +62,17 @@ namespace Tracer
 	}
 
 	// Cannonic operations
-	double dotProd(const Vector2& _v1, const Vector2& _v2)
+	float dotProd(const Vector2& _v1, const Vector2& _v2)
 	{
 		return _v1.x * _v2.x + _v1.y * _v2.y;
 	}
 
-	double length(const Vector2& _v1)
+	float length(const Vector2& _v1)
 	{
 		return sqrt(_v1.x * _v1.x + _v1.y * _v1.y);
 	}
 
-	double length2(const Vector2& _v1)
+	float length2(const Vector2& _v1)
 	{
 		return (_v1.x * _v1.x + _v1.y * _v1.y);
 	}

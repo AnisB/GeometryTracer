@@ -23,20 +23,20 @@ namespace Tracer
 {
 	// inline methods
 		// Constructors
-	inline Vector4 vector4(const double _x, const double _y, const double _z, const double _w);
-	inline Vector4 vector4(const double _v);
+	inline Vector4 vector4(const float _x, const float _y, const float _z, const float _w);
+	inline Vector4 vector4(const float _v);
 
 		// Operators
-	inline Vector4 operator*(const Vector4& _v1, double parFactor);
-	inline Vector4 operator/(const Vector4& _v1, double parFactor);
+	inline Vector4 operator*(const Vector4& _v1, float parFactor);
+	inline Vector4 operator/(const Vector4& _v1, float parFactor);
 	inline Vector4 operator+(const Vector4& _v1, const Vector4& _v2);
 	inline Vector4 operator-(const Vector4& _v1, const Vector4& _v2);
 
 		// Cannonic operations
-	inline double dotProd(const Vector4& _v1, const Vector4& _v2);
+	inline float dotProd(const Vector4& _v1, const Vector4& _v2);
 	inline Vector4 crossProd(const Vector4& _v1, const Vector4& _v2);
-	inline double length(const Vector4& _v1);
-	inline double length2(const Vector4& _v1);
+	inline float length(const Vector4& _v1);
+	inline float length2(const Vector4& _v1);
 
 	// Default values;
 	extern const Vector4 v4_ZERO;

@@ -242,5 +242,68 @@ function createQuad(parP1, parP2, parP3, parP4, parColorVal)
 
     return plan;
 }
+
+
+// Creation d'un plan
+function BuildSceneObjectFromTriangleList()
+{
+    // Données de sphere
+    var sceneObject = [];
+    // Données  attribute
+    var vertexPositionData = [];
+    var normalData = [];
+    var textureCoordData = [];
+    var indexData = [];
+
+    var nbprimtives = 1
+    for(var count = 0; count < nbprimtives; ++count)
+    {
+        var obj = primitives[count]
+        vertexPositionData.push(obj.p0[0]);
+        vertexPositionData.push(obj.p0[1]);
+        vertexPositionData.push(obj.p0[2]);
+
+        vertexPositionData.push(obj.p1[0]);
+        vertexPositionData.push(obj.p1[1]);
+        vertexPositionData.push(obj.p1[2]);
+
+        vertexPositionData.push(obj.p2[0]);
+        vertexPositionData.push(obj.p2[1]);
+        vertexPositionData.push(obj.p2[2]);
+
+        textureCoordData.push(0);
+        textureCoordData.push(0);
+
+        textureCoordData.push(0);
+        textureCoordData.push(0);
+    
+        textureCoordData.push(0);
+        textureCoordData.push(0);
+    
+        var norm = computeTriangleNormal(obj.p0, obj.p1, obj.p2);
+        normalData.push(norm[0]);
+        normalData.push(norm[1]);
+        normalData.push(norm[2]);
+
+        normalData.push(norm[0]);
+        normalData.push(norm[1]);
+        normalData.push(norm[2]);
+
+        normalData.push(norm[0]);
+        normalData.push(norm[1]);
+        normalData.push(norm[2]);
+
+        indexData.push(0);
+        indexData.push(1);
+        indexData.push(2);
+    }
+
+    createBuffersVINT(sceneObject, vertexPositionData, indexData, normalData, textureCoordData);
+    // On copie les autres données
+    sceneObject.position = [0,0,0];
+    sceneObject.colorVal = [1,0,0];
+
+    return sceneObject;
+}
 // ------------ Tracer ------------
 

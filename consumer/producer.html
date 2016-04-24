@@ -14,6 +14,8 @@
 <script type="text/javascript" src="tools.js"></script>
 <!-- Importing the tracer interface -->
 <script type="text/javascript" src="tracer.js"></script>
+<!-- Importing the css  -->
+<link rel="stylesheet" href="style_sheet.css">
 
 <!-- Declaration du fragment shader -->
 <script id="basicFragment" type="glsl/frag">
@@ -82,6 +84,12 @@
     // Scene objects
     var sceneObjects = [];
 
+    // primitives
+    var primitives = [];
+
+    // File reader 
+    var fr = null;
+
     // Init the camera object
     function initCamera()
     {
@@ -140,17 +148,28 @@
         gl.uniformMatrix4fv(_object.shaderProgram.normalMatrix, false, normalMatrix);
     }
 
-    function createScene() 
+    function ProcessFileAndRender(_traceFile) 
     {
-        var sourceLumiere3 = createQuad([20, -20, -150], [20, 20, -150],  [-20, -20, -150],[-20, 20, -150],  [0.066, 0.066, 1.0]);
-        sourceLumiere3.shaderProgram = generateProgram("basicVertex", "basicFragment");
-        sourceLumiere3.modelMatrix = mat4.create();
-        mat4.identity(sourceLumiere3.modelMatrix);
-        mat4.translate(sourceLumiere3.modelMatrix,sourceLumiere3.position);
-        initShaderData(sourceLumiere3.shaderProgram, sourceLumiere3);
-        sourceLumiere3.isOutDated = true;
+        fr = new FileReader();
+        fr.onload = function(e) 
+        { 
+            var contents = e.target.result;
+            ParseBinaryTrace(contents);
 
-        sceneObjects.push(sourceLumiere3);
+            var trianglesoup = BuildSceneObjectFromTriangleList(primitives);
+            trianglesoup.shaderProgram = generateProgram("basicVertex", "basicFragment");
+            trianglesoup.modelMatrix = mat4.create();
+            mat4.identity(trianglesoup.modelMatrix);
+            mat4.translate(trianglesoup.modelMatrix,trianglesoup.position);
+            initShaderData(trianglesoup.shaderProgram, trianglesoup);
+
+            sceneObjects.push(trianglesoup);
+
+            pre_render();
+            renderLoop();
+        }
+
+        fr.readAsArrayBuffer(_traceFile);
 
     }
 
@@ -213,7 +232,8 @@
         drawScene();        
     }
 
-    function main() 
+
+    function main(_traceFile) 
     {
         // Récupération du canvas
         canvas = document.getElementById("canvas");
@@ -225,17 +245,52 @@
         initCamera();
 
         // Initialisation de la scene
-        createScene();
-
-        pre_render();
-        renderLoop();
+        ProcessFileAndRender(_traceFile);
     }
 
 </script>
+
 </head>
 
-<body onload="main();">
-    <canvas id="canvas" style="border: none;" width="1280" height="720"></canvas>
+<body >
+    <!-- The rendering canvas -->
+    <canvas hidden id="canvas" style="border: none;" width="1280" height="720"></canvas>
+        
+    <!-- The file selecting interface -->
+    <div id="choose" class="inputWrapper" text-align="center">
+        Pick your trace file
+        <input id="tracefile" class="fileInput" type="file" name="tracefile">
+    </div>
+
+    <script>
+        function CheckTraceFile(_traceFile)
+        {
+            var extension = _traceFile.value.split('.').pop();
+            if(extension == "trace")
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        document.getElementById('tracefile').onchange = function() 
+        {
+            var selectedFile = document.getElementById('tracefile');
+            if(CheckTraceFile(selectedFile))
+            {
+                document.getElementById('canvas').style.display = 'block';
+                document.getElementById('choose').style.display = 'none';
+                main(selectedFile.files[0]);
+            }
+            else
+            {
+                alert("The selected file was not a trace file.");
+            }
+        };
+    </script>
 </body>
 
 </html>
