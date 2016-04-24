@@ -8,9 +8,9 @@ function initGL(parCanvas)
         gl = parCanvas.getContext("webgl");
         gl.viewportWidth = parCanvas.width;
         gl.viewportHeight = parCanvas.height;
-        //document.onkeydown = handleKeyDown;
-        //document.onkeyup = handleKeyUp;
-        //document.onmousemove = handleMouseMove;
+        document.onkeydown = handleKeyDown;
+        document.onkeyup = handleKeyUp;
+        document.onmousemove = handleMouseMove;
     } 
     catch (e) 
     {
@@ -255,7 +255,7 @@ function BuildSceneObjectFromTriangleList()
     var textureCoordData = [];
     var indexData = [];
 
-    var nbprimtives = 1
+    var nbprimtives = primitives.length;
     for(var count = 0; count < nbprimtives; ++count)
     {
         var obj = primitives[count]
@@ -293,9 +293,9 @@ function BuildSceneObjectFromTriangleList()
         normalData.push(norm[1]);
         normalData.push(norm[2]);
 
-        indexData.push(0);
-        indexData.push(1);
-        indexData.push(2);
+        indexData.push(count*3 + 0);
+        indexData.push(count*3 + 1);
+        indexData.push(count*3 + 2);
     }
 
     createBuffersVINT(sceneObject, vertexPositionData, indexData, normalData, textureCoordData);

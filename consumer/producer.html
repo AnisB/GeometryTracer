@@ -14,6 +14,8 @@
 <script type="text/javascript" src="tools.js"></script>
 <!-- Importing the tracer interface -->
 <script type="text/javascript" src="tracer.js"></script>
+<!-- Importing the navigation interface -->
+<script type="text/javascript" src="navigate.js"></script>
 <!-- Importing the css  -->
 <link rel="stylesheet" href="style_sheet.css">
 
@@ -89,6 +91,9 @@
 
     // File reader 
     var fr = null;
+
+    // key map
+    var currentlyPressedKeys = {};
 
     // Init the camera object
     function initCamera()
@@ -265,15 +270,7 @@
     <script>
         function CheckTraceFile(_traceFile)
         {
-            var extension = _traceFile.value.split('.').pop();
-            if(extension == "trace")
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return _traceFile.value.split('.').pop() == "trace";
         }
 
         document.getElementById('tracefile').onchange = function() 

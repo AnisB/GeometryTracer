@@ -13,7 +13,8 @@ namespace Tracer
 			UNKNOWN = 0,
 			TRIANGLE = 1,
 			LINE = 2,
-			POINT = 3
+			POINT = 3,
+			CUBE = 4
 		};
 	}
 }

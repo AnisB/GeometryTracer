@@ -18,6 +18,7 @@ namespace Tracer
 
 		// Access methods
 		void PushTriangle(const Vector3& _a, const Vector3& _b, const Vector3& _c);
+		void PushCube(const Vector3& _pos, double _distance);
 		void PushLine(const Vector3& _a, const Vector3& _b);
 		void PushPoint(const Vector3& _a);
 

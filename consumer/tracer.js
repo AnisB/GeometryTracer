@@ -3,12 +3,18 @@ var TPrimitives = {
 	UNKNOWN : 0,
 	TRIANGLE: 1,
 	LINE: 2,
-	POINT: 3
+	POINT: 3,
+    CUBE: 4
 };
 
 function readInt(_buffer, shift)
 {
     return (new Int32Array(_buffer, shift*4, 1)[0]);
+}
+
+function reatFloat(_buffer, shift)
+{
+    return (new Float32Array(_buffer, shift*4, 1)[0]);
 }
 
 function readVec3(_buffer, shift)
@@ -29,6 +35,15 @@ function CreateTriangle(_buffer, shift)
     triangle.p2 = readVec3(_buffer, shift + 6);
     triangle.type = TPrimitives.TRIANGLE;
     return triangle;
+}
+
+function CreateCube(_buffer, shift)
+{
+    var triangles = [];
+    var cubePos = readVec3(_buffer, shift);
+    var dim = reatFloat(_buffer, shift + 3);
+    triangle.type = TPrimitives.CUBE;
+    return triangles;
 }
 
 function CreateLine(_buffer, shift)
@@ -65,13 +80,18 @@ function ParseBinaryTrace(contents)
         }
         else if(primitive ==  TPrimitives.LINE)
         {
-            (CreateLine(contents, shiftCounter));
+            CreateLine(contents, shiftCounter);
             shiftCounter += 6;
         }
         else if(primitive ==  TPrimitives.POINT)
         {
-            (CreatePoint(contents, shiftCounter));
+            CreatePoint(contents, shiftCounter);
             shiftCounter+= 3;
+        }
+        else if(primitive ==  TPrimitives.CUBE)
+        {
+            CreateCube(contents, shiftCounter);
+            shiftCounter += 4;
         }
         else
         {

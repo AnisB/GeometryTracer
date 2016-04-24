@@ -29,6 +29,15 @@ namespace Tracer
 		m_fileStream.write ((const char*)&_c, 3*sizeof(float));
 	}
 
+	void TProducer::PushCube(const Vector3& _pos, double _dimension)
+	{
+		int type = TPrimitives::CUBE;
+		m_counter += 5;
+		m_fileStream.write ((const char*)&type, sizeof (int32_t));
+		m_fileStream.write ((const char*)&_pos, 3*sizeof(float));
+		m_fileStream.write ((const char*)&_dimension, sizeof(float));
+	}
+
 	void TProducer::PushLine(const Vector3& _a, const Vector3& _b)
 	{
 		int type = TPrimitives::LINE;
