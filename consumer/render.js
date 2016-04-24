@@ -8,9 +8,9 @@ function initGL(parCanvas)
         gl = parCanvas.getContext("webgl");
         gl.viewportWidth = parCanvas.width;
         gl.viewportHeight = parCanvas.height;
-        document.onkeydown = handleKeyDown;
-        document.onkeyup = handleKeyUp;
-        document.onmousemove = handleMouseMove;
+        //document.onkeydown = handleKeyDown;
+        //document.onkeyup = handleKeyUp;
+        //document.onmousemove = handleMouseMove;
     } 
     catch (e) 
     {
@@ -204,10 +204,10 @@ function createQuad(parP1, parP2, parP3, parP4, parColorVal)
     textureCoordData.push(1);
     textureCoordData.push(1);   
 
-    var norm1 = computeNormal(parP1, parP3, parP2); 
-    var norm2 = computeNormal(parP2, parP1, parP3); 
-    var norm3 = computeNormal(parP3, parP4, parP2); 
-    var norm4 = computeNormal(parP4, parP2, parP3); 
+    var norm1 = computeTriangleNormal(parP1, parP3, parP2); 
+    var norm2 = computeTriangleNormal(parP2, parP1, parP3); 
+    var norm3 = computeTriangleNormal(parP3, parP4, parP2); 
+    var norm4 = computeTriangleNormal(parP4, parP2, parP3); 
 
     normalData.push(norm1[0]);
     normalData.push(norm1[1]);
