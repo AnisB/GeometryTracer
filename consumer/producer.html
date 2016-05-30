@@ -70,6 +70,7 @@
         normal = normalize(NormalMatrix*vec4(VertexNormal,0.0)).xyz;
         // coordonnées de texture
         texcoord = VertexTexCoord;
+        gl_PointSize = 5.0;
     }
 </script>
 
@@ -87,7 +88,9 @@
     var sceneObjects = [];
 
     // primitives
-    var primitives = [];
+    var trianglePrimitives = [];
+    var linePrimitives = [];
+    var pointPrimitives = [];
 
     // File reader 
     var fr = null;
@@ -161,14 +164,32 @@
             var contents = e.target.result;
             ParseBinaryTrace(contents);
 
-            var trianglesoup = BuildSceneObjectFromTriangleList(primitives);
+            // Build the triangle soup
+            var trianglesoup = BuildSceneObjectFromTriangleList();
             trianglesoup.shaderProgram = generateProgram("basicVertex", "basicFragment");
             trianglesoup.modelMatrix = mat4.create();
             mat4.identity(trianglesoup.modelMatrix);
             mat4.translate(trianglesoup.modelMatrix,trianglesoup.position);
             initShaderData(trianglesoup.shaderProgram, trianglesoup);
-
             sceneObjects.push(trianglesoup);
+
+            // Build the line soup
+            var linesoup = BuildSceneObjectFromLineList();
+            linesoup.shaderProgram = generateProgram("basicVertex", "basicFragment");
+            linesoup.modelMatrix = mat4.create();
+            mat4.identity(linesoup.modelMatrix);
+            mat4.translate(linesoup.modelMatrix,linesoup.position);
+            initShaderData(linesoup.shaderProgram, linesoup);
+            sceneObjects.push(linesoup);
+
+            // Build the point soup
+            var pointSoup = BuildSceneObjectFromPointList();
+            pointSoup.shaderProgram = generateProgram("basicVertex", "basicFragment");
+            pointSoup.modelMatrix = mat4.create();
+            mat4.identity(pointSoup.modelMatrix);
+            mat4.translate(pointSoup.modelMatrix,pointSoup.position);
+            initShaderData(pointSoup.shaderProgram, pointSoup);
+            sceneObjects.push(pointSoup);
 
             pre_render();
             renderLoop();
@@ -185,26 +206,13 @@
         gl.bindBuffer(gl.ARRAY_BUFFER, _object.vertexPositionBuffer);
         gl.vertexAttribPointer(_object.shaderProgram.vertexPositionAttribute, _object.vertexPositionBuffer.itemSize, gl.FLOAT, false, 0, 0);
 
-        // ON bind le normal buffer 
-        gl.enableVertexAttribArray(_object.shaderProgram.vertexNormalAttribute);
-        gl.bindBuffer(gl.ARRAY_BUFFER, _object.vertexNormalBuffer);
-        gl.vertexAttribPointer(_object.shaderProgram.vertexNormalAttribute, _object.vertexNormalBuffer.itemSize, gl.FLOAT, false, 0, 0); 
-
-        // ON bind le texcoord buffer 
-        gl.enableVertexAttribArray(_object.shaderProgram.vertexTexCoordAttribute);
-        gl.bindBuffer(gl.ARRAY_BUFFER, _object.vertexTextureCoordBuffer);
-        gl.vertexAttribPointer(_object.shaderProgram.vertexTexCoordAttribute, _object.vertexTextureCoordBuffer.itemSize, gl.FLOAT, false, 0, 0);                
-
         // On bind l'IBO
         gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, _object.vertexIndexBuffer);
         // On injecte les données spécifique à la sphère
         updateObject(_object) 
         // On déssine la sphère
-        gl.drawElements(gl.TRIANGLES, _object.vertexIndexBuffer.numItems, gl.UNSIGNED_SHORT, 0);
+        gl.drawElements(_object.primitive, _object.vertexIndexBuffer.numItems, gl.UNSIGNED_SHORT, 0);
         gl.disableVertexAttribArray(_object.shaderProgram.vertexPositionAttribute);
-        gl.disableVertexAttribArray(_object.shaderProgram.vertexNormalAttribute);
-        gl.disableVertexAttribArray(_object.shaderProgram.vertexTexCoordAttribute);
-
     }
 
     function drawObjects()

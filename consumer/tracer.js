@@ -75,17 +75,19 @@ function ParseBinaryTrace(contents)
         if(primitive == TPrimitives.TRIANGLE)
         {
             var triangle = CreateTriangle(contents, shiftCounter);
-            primitives.push(triangle);
+            trianglePrimitives.push(triangle);
             shiftCounter += 9;
         }
         else if(primitive ==  TPrimitives.LINE)
         {
-            CreateLine(contents, shiftCounter);
+            var line = CreateLine(contents, shiftCounter);
+            linePrimitives.push(line);
             shiftCounter += 6;
         }
         else if(primitive ==  TPrimitives.POINT)
         {
-            CreatePoint(contents, shiftCounter);
+            var point = CreatePoint(contents, shiftCounter);
+            pointPrimitives.push(point);
             shiftCounter+= 3;
         }
         else if(primitive ==  TPrimitives.CUBE)

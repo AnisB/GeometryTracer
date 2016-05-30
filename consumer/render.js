@@ -22,7 +22,7 @@ function initGL(parCanvas)
     }
 }
 
-function createBuffersVINT(parObj, parVertexList, parIndexList, parNormalList, parTexCoordList)
+function createBuffersVI(parObj, parVertexList, parIndexList)
 {
    // Création du buffer de position
     var vertexPositionBuffer = gl.createBuffer();
@@ -49,31 +49,6 @@ function createBuffersVINT(parObj, parVertexList, parIndexList, parNormalList, p
     vertexIndexBuffer.numItems = parIndexList.length;
     // On copie dans la structure l'objet
     parObj.vertexIndexBuffer = vertexIndexBuffer;
-
-    var vertexNormalBuffer = gl.createBuffer();
-    // On bind le VBO de normale
-    gl.bindBuffer(gl.ARRAY_BUFFER, vertexNormalBuffer);
-    // On copie les données de normales sur le GPU
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(parNormalList), gl.STATIC_DRAW);
-    // 3 Données par normale
-    vertexNormalBuffer.itemSize = 3;
-    // Nombre de normales
-    vertexNormalBuffer.numItems = parNormalList.length / 3;
-    // On le copie dans la structure l'objet
-    parObj.vertexNormalBuffer = vertexNormalBuffer;
-
-    // Création du de coordonnées texture
-    var vertexTextureCoordBuffer = gl.createBuffer();
-    // On bind le VBO uv mapping
-    gl.bindBuffer(gl.ARRAY_BUFFER, vertexTextureCoordBuffer);
-    // On copie les données de texcoord sur le GPU
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(parTexCoordList), gl.STATIC_DRAW);
-    // 2 données par tex coord
-    vertexTextureCoordBuffer.itemSize = 2;
-    // Nombre de tex coord
-    vertexTextureCoordBuffer.numItems = parTexCoordList.length / 2;
-    // On le copie dans la strcture de l'objet
-    parObj.vertexTextureCoordBuffer = vertexTextureCoordBuffer;
 }
 
 function injectModelMatrix(parProgam, parModel)
@@ -244,7 +219,7 @@ function createQuad(parP1, parP2, parP3, parP4, parColorVal)
 }
 
 
-// Creation d'un plan
+// Creation d'une soupe de triangle
 function BuildSceneObjectFromTriangleList()
 {
     // Données de sphere
@@ -255,10 +230,10 @@ function BuildSceneObjectFromTriangleList()
     var textureCoordData = [];
     var indexData = [];
 
-    var nbprimtives = primitives.length;
+    var nbprimtives = trianglePrimitives.length;
     for(var count = 0; count < nbprimtives; ++count)
     {
-        var obj = primitives[count]
+        var obj = trianglePrimitives[count]
         vertexPositionData.push(obj.p0[0]);
         vertexPositionData.push(obj.p0[1]);
         vertexPositionData.push(obj.p0[2]);
@@ -271,37 +246,83 @@ function BuildSceneObjectFromTriangleList()
         vertexPositionData.push(obj.p2[1]);
         vertexPositionData.push(obj.p2[2]);
 
-        textureCoordData.push(0);
-        textureCoordData.push(0);
-
-        textureCoordData.push(0);
-        textureCoordData.push(0);
-    
-        textureCoordData.push(0);
-        textureCoordData.push(0);
-    
-        var norm = computeTriangleNormal(obj.p0, obj.p1, obj.p2);
-        normalData.push(norm[0]);
-        normalData.push(norm[1]);
-        normalData.push(norm[2]);
-
-        normalData.push(norm[0]);
-        normalData.push(norm[1]);
-        normalData.push(norm[2]);
-
-        normalData.push(norm[0]);
-        normalData.push(norm[1]);
-        normalData.push(norm[2]);
-
         indexData.push(count*3 + 0);
         indexData.push(count*3 + 1);
         indexData.push(count*3 + 2);
     }
 
-    createBuffersVINT(sceneObject, vertexPositionData, indexData, normalData, textureCoordData);
+    createBuffersVI(sceneObject, vertexPositionData, indexData);
     // On copie les autres données
     sceneObject.position = [0,0,0];
     sceneObject.colorVal = [1,0,0];
+    sceneObject.primitive = gl.TRIANGLES
+
+    return sceneObject;
+}
+
+// Creation d'une soupe de lignes
+function BuildSceneObjectFromLineList()
+{
+    // Données de sphere
+    var sceneObject = [];
+    // Données  attribute
+    var vertexPositionData = [];
+    var normalData = [];
+    var textureCoordData = [];
+    var indexData = [];
+
+    var nbprimtives = linePrimitives.length;
+    for(var count = 0; count < nbprimtives; ++count)
+    {
+        var obj = linePrimitives[count]
+        vertexPositionData.push(obj.p0[0]);
+        vertexPositionData.push(obj.p0[1]);
+        vertexPositionData.push(obj.p0[2]);
+
+        vertexPositionData.push(obj.p1[0]);
+        vertexPositionData.push(obj.p1[1]);
+        vertexPositionData.push(obj.p1[2]);
+    
+        indexData.push(count*2 + 0);
+        indexData.push(count*2 + 1);
+    }
+
+    createBuffersVI(sceneObject, vertexPositionData, indexData);
+    // On copie les autres données
+    sceneObject.position = [0,0,0];
+    sceneObject.colorVal = [1,0,0];
+    sceneObject.primitive = gl.LINES
+
+    return sceneObject;
+}
+
+
+// Creation d'une soupe de lignes
+function BuildSceneObjectFromPointList()
+{
+    // Données de sphere
+    var sceneObject = [];
+    // Données  attribute
+    var vertexPositionData = [];
+    var normalData = [];
+    var textureCoordData = [];
+    var indexData = [];
+
+    var nbprimtives = pointPrimitives.length;
+    for(var count = 0; count < nbprimtives; ++count)
+    {
+        var obj = pointPrimitives[count]
+        vertexPositionData.push(obj.p0[0]);
+        vertexPositionData.push(obj.p0[1]);
+        vertexPositionData.push(obj.p0[2]);
+        indexData.push(count);
+    }
+
+    createBuffersVI(sceneObject, vertexPositionData, indexData);
+    // On copie les autres données
+    sceneObject.position = [0,0,0];
+    sceneObject.colorVal = [1,0,0];
+    sceneObject.primitive = gl.POINTS
 
     return sceneObject;
 }
