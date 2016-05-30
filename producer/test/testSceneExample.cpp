@@ -1,6 +1,6 @@
 // Library include
-#include <core/producer.h>
-#include <butter/vector3.h>
+#include <producer.h>
+#include <vector3.h>
 
 using namespace Tracer;
 int main()

@@ -20,6 +20,10 @@
 
 namespace Tracer
 {
+	struct Vector3
+	{
+		float x,y,z;
+	};
 	// inline methods
 		// Constructors
 	inline Vector3 vector3(const float _x,const float _y, const float _z);

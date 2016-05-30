@@ -79,7 +79,7 @@ namespace Tracer
 
 	float length(const Vector3& _v1)
 	{
-		return sqrt(_v1.x * _v1.x + _v1.y * _v1.y + _v1.z * _v1.z);
+		return sqrtf(_v1.x * _v1.x + _v1.y * _v1.y + _v1.z * _v1.z);
 	}
 
 	float length2(const Vector3& _v1)

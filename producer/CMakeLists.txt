@@ -40,12 +40,6 @@ add_definitions( -DWIN32 )
 set(CMAKE_CXX_FLAGS_DEBUG "/MDd /Zi")
 ENDIF()
 
-# Generating the libraries
-GENERATE_LIB("${SOURCES}/base" Base "GeometryProducer")
-GENERATE_LIB("${SOURCES}/butter" Butter "GeometryProducer")
-GENERATE_LIB("${SOURCES}/core" Core "GeometryProducer")
-
-SET(CORELIBS ${CORELIBS} Base Butter Core)
 
 # Adding the tests if we should
 IF(NO_TESTS)
