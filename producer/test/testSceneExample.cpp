@@ -9,6 +9,7 @@ int main()
 	
 	// Cube with faces
 	// Front face
+	manager.NewObject();
 	manager.PushTriangle(vector3(20, -20, -150), vector3(20, 20, -150), vector3(-20, -20, -150));
 	manager.PushTriangle(vector3(-20, -20, -150), vector3(20, 20, -150), vector3(-20, 20, -150));
 	
@@ -34,6 +35,7 @@ int main()
 
 
 	// Cube with lines
+	manager.NewObject();
 	manager.PushLine(vector3(40, -20, -150), vector3(80, -20, -150));
 	manager.PushLine(vector3(80, -20, -150), vector3(80, 20, -150));
 	manager.PushLine(vector3(40, 20, -150), vector3(80, 20, -150));
@@ -51,6 +53,7 @@ int main()
 
 
 	// Cube with points
+	manager.NewObject();
 	manager.PushPoint(vector3(-40, -20, -150));
 	manager.PushPoint(vector3(-80, -20, -150));
 	manager.PushPoint(vector3(-40, 20, -150));

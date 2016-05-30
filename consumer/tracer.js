@@ -33,6 +33,7 @@ function CreateTriangle(_buffer, shift)
     triangle.p0 = readVec3(_buffer, shift);
     triangle.p1 = readVec3(_buffer, shift + 3);
     triangle.p2 = readVec3(_buffer, shift + 6);
+    triangle.color = readVec3(_buffer, shift + 9);
     triangle.type = TPrimitives.TRIANGLE;
     return triangle;
 }
@@ -42,6 +43,7 @@ function CreateCube(_buffer, shift)
     var triangles = [];
     var cubePos = readVec3(_buffer, shift);
     var dim = reatFloat(_buffer, shift + 3);
+    triangle.color = readVec3(_buffer, shift + 6);
     triangle.type = TPrimitives.CUBE;
     return triangles;
 }
@@ -51,6 +53,7 @@ function CreateLine(_buffer, shift)
     var line = [];
     line.p0 = readVec3(_buffer, shift);
     line.p1 = readVec3(_buffer, shift + 3);
+    line.color = readVec3(_buffer, shift + 6);
     line.type = TPrimitives.LINE;
     return line;
 }
@@ -59,6 +62,7 @@ function CreatePoint(_buffer, shift)
 {
     var point = [];
     point.p0 = readVec3(_buffer, shift);
+    point.color = readVec3(_buffer, shift + 3);
     point.type = TPrimitives.POINT;
     return point;
 }
@@ -76,24 +80,24 @@ function ParseBinaryTrace(contents)
         {
             var triangle = CreateTriangle(contents, shiftCounter);
             trianglePrimitives.push(triangle);
-            shiftCounter += 9;
+            shiftCounter += 12;
         }
         else if(primitive ==  TPrimitives.LINE)
         {
             var line = CreateLine(contents, shiftCounter);
             linePrimitives.push(line);
-            shiftCounter += 6;
+            shiftCounter += 9;
         }
         else if(primitive ==  TPrimitives.POINT)
         {
             var point = CreatePoint(contents, shiftCounter);
             pointPrimitives.push(point);
-            shiftCounter+= 3;
+            shiftCounter+= 6;
         }
         else if(primitive ==  TPrimitives.CUBE)
         {
             CreateCube(contents, shiftCounter);
-            shiftCounter += 4;
+            shiftCounter += 7;
         }
         else
         {

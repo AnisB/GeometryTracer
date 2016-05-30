@@ -24,15 +24,12 @@
     // Declaration de la précision des flottants
     precision mediump float;
     // Attributs interpolés par la pipeline WebGL
-    // Normale normalisée en espace monde
-    varying vec3 normal;
-    // Coordonnées de textures pour la sphere
-    varying vec2 texcoord;
+    varying vec3 color;
 
     // position du fragment dans l'espace monde
     void main(void) 
     {
-        gl_FragColor = vec4(1.0,0.0,0.0,1.0);
+        gl_FragColor = vec4(color,1.0);
     }
 </script>
 
@@ -41,10 +38,8 @@
     //Attributs passés en attribute
     // Position du vertex en espace objet
     attribute vec3 VertexPosition;
-    // Normale du vertex en espace objet
-    attribute vec3 VertexNormal;
-    // Coordonnées textures pour le vertex
-    attribute vec2 VertexTexCoord;
+    // Couleur du vertex en espace objet
+    attribute vec3 VertexColor;
 
     // Matrice de projection    
     uniform mat4 ProjMatrix;
@@ -56,10 +51,8 @@
     uniform mat4 NormalMatrix;
 
     // Données à Injecter dans le fragment shader
-    // Normale normalisée en espace monde
-    varying vec3 normal;
-    // Coordnnées texture
-    varying vec2 texcoord;
+    // Couelur
+    varying vec3 color;
 
     void main(void) 
     {
@@ -67,9 +60,8 @@
         // Conversion en coordnnées clipping
         gl_Position = ProjMatrix * ViewMatrix * vec4(ecPos,1.0);
         // Normalisation et conversion en espace monde
-        normal = normalize(NormalMatrix*vec4(VertexNormal,0.0)).xyz;
+        color = VertexColor;
         // coordonnées de texture
-        texcoord = VertexTexCoord;
         gl_PointSize = 5.0;
     }
 </script>
@@ -116,10 +108,7 @@
         _program.vertexPositionAttribute = gl.getAttribLocation(_program, "VertexPosition");
         
         // On bind le vertex buffer object de normale
-        _program.vertexNormalAttribute = gl.getAttribLocation(_program, "VertexNormal");
-
-        // On bind le vertex buffer object de tex coord
-        _program.vertexTexCoordAttribute = gl.getAttribLocation(_program, "VertexTexCoord");
+        _program.vertexColorAttribute = gl.getAttribLocation(_program, "VertexColor");
 
         // On récupère l'index la matrice de projection
         _program.projMatrix = gl.getUniformLocation(_program, "ProjMatrix");
@@ -133,9 +122,6 @@
 
         // Injection de la projection matrix
         gl.uniformMatrix4fv(_program.projMatrix, false, camera.projectionMatrix);
-
-        //Injection de s données de réfléctance
-        gl.uniform3fv(_program.colorUniform, _object.colorVal);   
     }
 
     function updateCamera(_shader)
@@ -206,6 +192,10 @@
         gl.bindBuffer(gl.ARRAY_BUFFER, _object.vertexPositionBuffer);
         gl.vertexAttribPointer(_object.shaderProgram.vertexPositionAttribute, _object.vertexPositionBuffer.itemSize, gl.FLOAT, false, 0, 0);
 
+        gl.enableVertexAttribArray(_object.shaderProgram.vertexColorAttribute);
+        gl.bindBuffer(gl.ARRAY_BUFFER, _object.vertexColorBuffer);
+        gl.vertexAttribPointer(_object.shaderProgram.vertexColorAttribute, _object.vertexColorBuffer.itemSize, gl.FLOAT, false, 0, 0);
+
         // On bind l'IBO
         gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, _object.vertexIndexBuffer);
         // On injecte les données spécifique à la sphère
@@ -213,6 +203,7 @@
         // On déssine la sphère
         gl.drawElements(_object.primitive, _object.vertexIndexBuffer.numItems, gl.UNSIGNED_SHORT, 0);
         gl.disableVertexAttribArray(_object.shaderProgram.vertexPositionAttribute);
+        gl.disableVertexAttribArray(_object.shaderProgram.vertexColorAttribute);
     }
 
     function drawObjects()

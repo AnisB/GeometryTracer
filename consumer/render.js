@@ -22,7 +22,7 @@ function initGL(parCanvas)
     }
 }
 
-function createBuffersVI(parObj, parVertexList, parIndexList)
+function createBuffersVIC(parObj, parVertexList, parIndexList, parColorList)
 {
    // Création du buffer de position
     var vertexPositionBuffer = gl.createBuffer();
@@ -49,6 +49,19 @@ function createBuffersVI(parObj, parVertexList, parIndexList)
     vertexIndexBuffer.numItems = parIndexList.length;
     // On copie dans la structure l'objet
     parObj.vertexIndexBuffer = vertexIndexBuffer;
+
+    // Création du buffer de couleur
+    var vertexColorBuffer = gl.createBuffer();
+    // On bind le buffer de couleur
+    gl.bindBuffer(gl.ARRAY_BUFFER, vertexColorBuffer);
+    //On copie les données sur ke GPU
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(parColorList), gl.STATIC_DRAW);
+    // 3 données par couleurs
+    vertexColorBuffer.itemSize = 3;
+    // Nombre de couleurs
+    vertexColorBuffer.numItems = parVertexList.length / 3;
+    // Copie dans la structure l'objet
+    parObj.vertexColorBuffer = vertexColorBuffer;
 }
 
 function injectModelMatrix(parProgam, parModel)
@@ -226,8 +239,7 @@ function BuildSceneObjectFromTriangleList()
     var sceneObject = [];
     // Données  attribute
     var vertexPositionData = [];
-    var normalData = [];
-    var textureCoordData = [];
+    var colorData = [];
     var indexData = [];
 
     var nbprimtives = trianglePrimitives.length;
@@ -246,12 +258,24 @@ function BuildSceneObjectFromTriangleList()
         vertexPositionData.push(obj.p2[1]);
         vertexPositionData.push(obj.p2[2]);
 
+        colorData.push(obj.color[0]);
+        colorData.push(obj.color[1]);
+        colorData.push(obj.color[2]);
+
+        colorData.push(obj.color[0]);
+        colorData.push(obj.color[1]);
+        colorData.push(obj.color[2]);
+
+        colorData.push(obj.color[0]);
+        colorData.push(obj.color[1]);
+        colorData.push(obj.color[2]);
+
         indexData.push(count*3 + 0);
         indexData.push(count*3 + 1);
         indexData.push(count*3 + 2);
     }
 
-    createBuffersVI(sceneObject, vertexPositionData, indexData);
+    createBuffersVIC(sceneObject, vertexPositionData, indexData, colorData);
     // On copie les autres données
     sceneObject.position = [0,0,0];
     sceneObject.colorVal = [1,0,0];
@@ -267,8 +291,7 @@ function BuildSceneObjectFromLineList()
     var sceneObject = [];
     // Données  attribute
     var vertexPositionData = [];
-    var normalData = [];
-    var textureCoordData = [];
+    var colorData = [];
     var indexData = [];
 
     var nbprimtives = linePrimitives.length;
@@ -283,11 +306,19 @@ function BuildSceneObjectFromLineList()
         vertexPositionData.push(obj.p1[1]);
         vertexPositionData.push(obj.p1[2]);
     
+        colorData.push(obj.color[0]);
+        colorData.push(obj.color[1]);
+        colorData.push(obj.color[2]);
+
+        colorData.push(obj.color[0]);
+        colorData.push(obj.color[1]);
+        colorData.push(obj.color[2]);
+
         indexData.push(count*2 + 0);
         indexData.push(count*2 + 1);
     }
 
-    createBuffersVI(sceneObject, vertexPositionData, indexData);
+    createBuffersVIC(sceneObject, vertexPositionData, indexData, colorData);
     // On copie les autres données
     sceneObject.position = [0,0,0];
     sceneObject.colorVal = [1,0,0];
@@ -304,8 +335,7 @@ function BuildSceneObjectFromPointList()
     var sceneObject = [];
     // Données  attribute
     var vertexPositionData = [];
-    var normalData = [];
-    var textureCoordData = [];
+    var colorData = [];
     var indexData = [];
 
     var nbprimtives = pointPrimitives.length;
@@ -315,10 +345,15 @@ function BuildSceneObjectFromPointList()
         vertexPositionData.push(obj.p0[0]);
         vertexPositionData.push(obj.p0[1]);
         vertexPositionData.push(obj.p0[2]);
+        
+        colorData.push(obj.color[0]);
+        colorData.push(obj.color[1]);
+        colorData.push(obj.color[2]);
+
         indexData.push(count);
     }
 
-    createBuffersVI(sceneObject, vertexPositionData, indexData);
+    createBuffersVIC(sceneObject, vertexPositionData, indexData, colorData);
     // On copie les autres données
     sceneObject.position = [0,0,0];
     sceneObject.colorVal = [1,0,0];
